@@ -1,10 +1,13 @@
 package net.ken.springinitstep.biz.Controller;
 
 import net.ken.springinitstep.biz.Service.DreamcastService;
-import org.springframework.beans.factory.annotation.Autowired;
+import net.ken.springinitstep.biz.model.Console;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Yang, Haiqiang on 2019/10/16.
@@ -12,13 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class DreamcastController {
 
-    @Autowired
-    private DreamcastService dreamcastService;
+    private final DreamcastService dreamcastService;
+
+    public DreamcastController(DreamcastService dreamcastService) {
+        this.dreamcastService = dreamcastService;
+    }
 
     @RequestMapping("/dc")
     @ResponseBody
-    public String dc(){
+    public Object dc() {
         System.out.println(dreamcastService.dreamcastHello());
-        return "Dreamcast";
+        return Arrays.asList(new Console("SEGA", "Dreamcast", new Date()),
+                new Console("SONY", "PlayStation 2", new Date()));
     }
 }
